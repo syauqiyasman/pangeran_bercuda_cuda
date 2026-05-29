@@ -1,0 +1,782 @@
+==================================================
+  EKSPERIMEN TOPIK 2: PERKALIAN MATRIKS
+  Sun May 24 12:24:23 UTC 2026
+==================================================
+
+[KOMPILASI]
+
+[SETUP CUDA LIBRARY PATH]
+  ✓ matmul_seq
+  ✓ matmul_basic
+  ✓ matmul_shared
+  ✓ matmul_cublas
+	libcublas.so.10 => /opt/nvidia/hpc_sdk/Linux_x86_64/21.9/math_libs/10.2/lib64/libcublas.so.10 (0x00007fb97ccd7000)
+	libcublasLt.so.10 => /opt/nvidia/hpc_sdk/Linux_x86_64/21.9/math_libs/10.2/lib64/libcublasLt.so.10 (0x00007fb97ac16000)
+  ✓ matmul_mpi
+
+[A] SEQUENTIAL CPU
+
+  --- N=512 ---
+============================================================
+  Perkalian Matriks Sekuensial (CPU)
+  Ukuran Matriks : N = 512 x 512
+  Memori         : 1.00 MB per matriks
+============================================================
+
+  Waktu Komputasi : 0.274883 detik
+  GFLOPS          : 0.9765
+
+  C[0][0] = 127.418266  (sanity check)
+============================================================
+  Referensi hasil disimpan ke: ref_result_N512.bin
+============================================================
+
+  --- N=1024 ---
+============================================================
+  Perkalian Matriks Sekuensial (CPU)
+  Ukuran Matriks : N = 1024 x 1024
+  Memori         : 4.00 MB per matriks
+============================================================
+
+  Waktu Komputasi : 6.039480 detik
+  GFLOPS          : 0.3556
+
+  C[0][0] = 260.103149  (sanity check)
+============================================================
+  Referensi hasil disimpan ke: ref_result_N1024.bin
+============================================================
+
+  --- N=2048 ---
+============================================================
+  Perkalian Matriks Sekuensial (CPU)
+  Ukuran Matriks : N = 2048 x 2048
+  Memori         : 16.00 MB per matriks
+============================================================
+
+  Waktu Komputasi : 59.691014 detik
+  GFLOPS          : 0.2878
+
+  C[0][0] = 492.578827  (sanity check)
+============================================================
+  Referensi hasil disimpan ke: ref_result_N2048.bin
+============================================================
+
+[B] CUDA TANPA SHARED MEMORY
+
+  --- N=512  BlockSize=8 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=512  BLOCK_SIZE=8
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (64, 64)  blocks
+  Block : (8, 8)  threads  -> 64 threads/block
+  Total threads : 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000385 detik    │
+  │ Komputasi (kernel):   0.000911 detik    │
+  │ Transfer D→H      :   0.000198 detik    │
+  │ Komunikasi total  :   0.000582 detik    │
+  │ GFLOPS            :   294.6059          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000911 s  y = 0.000582 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=512  BlockSize=16 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=512  BLOCK_SIZE=16
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (32, 32)  blocks
+  Block : (16, 16)  threads  -> 256 threads/block
+  Total threads : 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000401 detik    │
+  │ Komputasi (kernel):   0.000647 detik    │
+  │ Transfer D→H      :   0.000192 detik    │
+  │ Komunikasi total  :   0.000594 detik    │
+  │ GFLOPS            :   415.0721          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000647 s  y = 0.000594 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=512  BlockSize=32 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=512  BLOCK_SIZE=32
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (16, 16)  blocks
+  Block : (32, 32)  threads  -> 1024 threads/block
+  Total threads : 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000397 detik    │
+  │ Komputasi (kernel):   0.000754 detik    │
+  │ Transfer D→H      :   0.000200 detik    │
+  │ Komunikasi total  :   0.000597 detik    │
+  │ GFLOPS            :   356.1890          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000754 s  y = 0.000597 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  BlockSize=8 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=1024  BLOCK_SIZE=8
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (128, 128)  blocks
+  Block : (8, 8)  threads  -> 64 threads/block
+  Total threads : 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001215 detik    │
+  │ Komputasi (kernel):   0.007854 detik    │
+  │ Transfer D→H      :   0.000541 detik    │
+  │ Komunikasi total  :   0.001755 detik    │
+  │ GFLOPS            :   273.4182          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.007854 s  y = 0.001755 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  BlockSize=16 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=1024  BLOCK_SIZE=16
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (64, 64)  blocks
+  Block : (16, 16)  threads  -> 256 threads/block
+  Total threads : 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001230 detik    │
+  │ Komputasi (kernel):   0.004794 detik    │
+  │ Transfer D→H      :   0.000543 detik    │
+  │ Komunikasi total  :   0.001773 detik    │
+  │ GFLOPS            :   447.9060          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.004794 s  y = 0.001773 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  BlockSize=32 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=1024  BLOCK_SIZE=32
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (32, 32)  blocks
+  Block : (32, 32)  threads  -> 1024 threads/block
+  Total threads : 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001200 detik    │
+  │ Komputasi (kernel):   0.005539 detik    │
+  │ Transfer D→H      :   0.000540 detik    │
+  │ Komunikasi total  :   0.001739 detik    │
+  │ GFLOPS            :   387.7086          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.005539 s  y = 0.001739 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  BlockSize=8 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=2048  BLOCK_SIZE=8
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (256, 256)  blocks
+  Block : (8, 8)  threads  -> 64 threads/block
+  Total threads : 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.004056 detik    │
+  │ Komputasi (kernel):   0.074413 detik    │
+  │ Transfer D→H      :   0.001758 detik    │
+  │ Komunikasi total  :   0.005813 detik    │
+  │ GFLOPS            :   230.8718          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.074413 s  y = 0.005813 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  BlockSize=16 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=2048  BLOCK_SIZE=16
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (128, 128)  blocks
+  Block : (16, 16)  threads  -> 256 threads/block
+  Total threads : 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003994 detik    │
+  │ Komputasi (kernel):   0.042885 detik    │
+  │ Transfer D→H      :   0.001801 detik    │
+  │ Komunikasi total  :   0.005795 detik    │
+  │ GFLOPS            :   400.6024          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.042885 s  y = 0.005795 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  BlockSize=32 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=2048  BLOCK_SIZE=32
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  VRAM: 11162 MB
+
+  Grid  : (64, 64)  blocks
+  Block : (32, 32)  threads  -> 1024 threads/block
+  Total threads : 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003905 detik    │
+  │ Komputasi (kernel):   0.042957 detik    │
+  │ Transfer D→H      :   0.001861 detik    │
+  │ Komunikasi total  :   0.005766 detik    │
+  │ GFLOPS            :   399.9274          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.042957 s  y = 0.005766 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+[C] CUDA DENGAN SHARED MEMORY (TILED)
+
+  --- N=512  TileSize=8 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=512  TILE_SIZE=8
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 0 KB (tile A + tile B)
+
+  Grid  : (64, 64) blocks
+  Block : (8, 8) threads  -> 64 threads/block
+  Total threads: 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000412 detik    │
+  │ Komputasi (kernel):   0.000254 detik    │
+  │ Transfer D→H      :   0.000240 detik    │
+  │ Komunikasi total  :   0.000652 detik    │
+  │ GFLOPS            :  1055.7019          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000254 s  y = 0.000652 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=512  TileSize=16 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=512  TILE_SIZE=16
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 2 KB (tile A + tile B)
+
+  Grid  : (32, 32) blocks
+  Block : (16, 16) threads  -> 256 threads/block
+  Total threads: 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000414 detik    │
+  │ Komputasi (kernel):   0.000222 detik    │
+  │ Transfer D→H      :   0.000189 detik    │
+  │ Komunikasi total  :   0.000603 detik    │
+  │ GFLOPS            :  1208.9073          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000222 s  y = 0.000603 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=512  TileSize=32 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=512  TILE_SIZE=32
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 8 KB (tile A + tile B)
+
+  Grid  : (16, 16) blocks
+  Block : (32, 32) threads  -> 1024 threads/block
+  Total threads: 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000382 detik    │
+  │ Komputasi (kernel):   0.000214 detik    │
+  │ Transfer D→H      :   0.000191 detik    │
+  │ Komunikasi total  :   0.000573 detik    │
+  │ GFLOPS            :  1255.0281          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000214 s  y = 0.000573 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  TileSize=8 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=1024  TILE_SIZE=8
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 0 KB (tile A + tile B)
+
+  Grid  : (128, 128) blocks
+  Block : (8, 8) threads  -> 64 threads/block
+  Total threads: 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001198 detik    │
+  │ Komputasi (kernel):   0.001916 detik    │
+  │ Transfer D→H      :   0.000789 detik    │
+  │ Komunikasi total  :   0.001988 detik    │
+  │ GFLOPS            :  1120.7600          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001916 s  y = 0.001988 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  TileSize=16 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=1024  TILE_SIZE=16
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 2 KB (tile A + tile B)
+
+  Grid  : (64, 64) blocks
+  Block : (16, 16) threads  -> 256 threads/block
+  Total threads: 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001435 detik    │
+  │ Komputasi (kernel):   0.001670 detik    │
+  │ Transfer D→H      :   0.000613 detik    │
+  │ Komunikasi total  :   0.002048 detik    │
+  │ GFLOPS            :  1285.7089          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001670 s  y = 0.002048 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  TileSize=32 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=1024  TILE_SIZE=32
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 8 KB (tile A + tile B)
+
+  Grid  : (32, 32) blocks
+  Block : (32, 32) threads  -> 1024 threads/block
+  Total threads: 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001219 detik    │
+  │ Komputasi (kernel):   0.001513 detik    │
+  │ Transfer D→H      :   0.000547 detik    │
+  │ Komunikasi total  :   0.001766 detik    │
+  │ GFLOPS            :  1419.5123          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001513 s  y = 0.001766 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  TileSize=8 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=2048  TILE_SIZE=8
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 0 KB (tile A + tile B)
+
+  Grid  : (256, 256) blocks
+  Block : (8, 8) threads  -> 64 threads/block
+  Total threads: 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003972 detik    │
+  │ Komputasi (kernel):   0.019507 detik    │
+  │ Transfer D→H      :   0.001802 detik    │
+  │ Komunikasi total  :   0.005774 detik    │
+  │ GFLOPS            :   880.7227          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.019507 s  y = 0.005774 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  TileSize=16 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=2048  TILE_SIZE=16
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 2 KB (tile A + tile B)
+
+  Grid  : (128, 128) blocks
+  Block : (16, 16) threads  -> 256 threads/block
+  Total threads: 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003921 detik    │
+  │ Komputasi (kernel):   0.014151 detik    │
+  │ Transfer D→H      :   0.002519 detik    │
+  │ Komunikasi total  :   0.006441 detik    │
+  │ GFLOPS            :  1214.0111          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.014151 s  y = 0.006441 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  TileSize=32 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=2048  TILE_SIZE=32
+============================================================
+  GPU          : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 8 KB (tile A + tile B)
+
+  Grid  : (64, 64) blocks
+  Block : (32, 32) threads  -> 1024 threads/block
+  Total threads: 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.004509 detik    │
+  │ Komputasi (kernel):   0.011961 detik    │
+  │ Transfer D→H      :   0.002226 detik    │
+  │ Komunikasi total  :   0.006735 detik    │
+  │ GFLOPS            :  1436.2902          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.011961 s  y = 0.006735 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+[D] cuBLAS
+
+  --- N=512 ---
+============================================================
+  cuBLAS — Perkalian Matriks Optimal
+  N = 512 x 512
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (cuBLAS)         │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000424 detik    │
+  │ Komputasi cuBLAS  :   0.000087 detik    │
+  │ Transfer D→H      :   0.000265 detik    │
+  │ Komunikasi total  :   0.000689 detik    │
+  │ GFLOPS            :  3076.1305          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000087 s  y = 0.000689 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024 ---
+============================================================
+  cuBLAS — Perkalian Matriks Optimal
+  N = 1024 x 1024
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (cuBLAS)         │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001265 detik    │
+  │ Komputasi cuBLAS  :   0.000297 detik    │
+  │ Transfer D→H      :   0.000720 detik    │
+  │ Komunikasi total  :   0.001985 detik    │
+  │ GFLOPS            :  7233.8971          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000297 s  y = 0.001985 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048 ---
+============================================================
+  cuBLAS — Perkalian Matriks Optimal
+  N = 2048 x 2048
+============================================================
+  GPU : NVIDIA GeForce GTX 1080 Ti  (SM 6.1)
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (cuBLAS)         │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.004045 detik    │
+  │ Komputasi cuBLAS  :   0.001814 detik    │
+  │ Transfer D→H      :   0.001808 detik    │
+  │ Komunikasi total  :   0.005853 detik    │
+  │ GFLOPS            :  9471.6294          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001814 s  y = 0.005853 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+[E] MPI MULTICORE
+
+  --- N=512  NP=8 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=8  N=512
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP= 8)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   0.069952 detik    │
+  │ Komunikasi (max)  :   0.034777 detik    │
+  │   - Scatter+Bcast :   0.003800 detik    │
+  │   - Gather        :   0.025805 detik    │
+  │ GFLOPS            :     3.8374          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.069952 s  y = 0.034777 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=512  NP=16 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=16  N=512
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP=16)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   0.037117 detik    │
+  │ Komunikasi (max)  :   0.017821 detik    │
+  │   - Scatter+Bcast :   0.002954 detik    │
+  │   - Gather        :   0.014867 detik    │
+  │ GFLOPS            :     7.2322          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.037117 s  y = 0.017821 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=1024  NP=8 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=8  N=1024
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP= 8)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   0.798427 detik    │
+  │ Komunikasi (max)  :   0.030548 detik    │
+  │   - Scatter+Bcast :   0.009105 detik    │
+  │   - Gather        :   0.007124 detik    │
+  │ GFLOPS            :     2.6896          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.798427 s  y = 0.030548 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=1024  NP=16 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=16  N=1024
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP=16)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   0.423857 detik    │
+  │ Komunikasi (max)  :   0.048295 detik    │
+  │   - Scatter+Bcast :   0.011379 detik    │
+  │   - Gather        :   0.011597 detik    │
+  │ GFLOPS            :     5.0665          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.423857 s  y = 0.048295 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=2048  NP=8 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=8  N=2048
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP= 8)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :  10.135722 detik    │
+  │ Komunikasi (max)  :   3.796541 detik    │
+  │   - Scatter+Bcast :   0.031804 detik    │
+  │   - Gather        :   0.005987 detik    │
+  │ GFLOPS            :     1.6950          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 10.135722 s  y = 3.796541 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=2048  NP=16 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=16  N=2048
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP=16)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   5.034675 detik    │
+  │ Komunikasi (max)  :   2.101465 detik    │
+  │   - Scatter+Bcast :   0.046344 detik    │
+  │   - Gather        :   0.006349 detik    │
+  │ GFLOPS            :     3.4123          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 5.034675 s  y = 2.101465 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+==================================================
+  SELESAI. Hasil disimpan di: experiment_results.log
+==================================================

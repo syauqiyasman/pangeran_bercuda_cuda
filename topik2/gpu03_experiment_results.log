@@ -1,0 +1,782 @@
+==================================================
+  EKSPERIMEN TOPIK 2: PERKALIAN MATRIKS
+  Sun May 24 12:55:19 UTC 2026
+==================================================
+
+[KOMPILASI]
+
+[SETUP CUDA LIBRARY PATH]
+  ✓ matmul_seq
+  ✓ matmul_basic
+  ✓ matmul_shared
+  ✓ matmul_cublas
+	libcublas.so.10 => /opt/nvidia/hpc_sdk/Linux_x86_64/21.9/math_libs/10.2/lib64/libcublas.so.10 (0x00007f747ecde000)
+	libcublasLt.so.10 => /opt/nvidia/hpc_sdk/Linux_x86_64/21.9/math_libs/10.2/lib64/libcublasLt.so.10 (0x00007f747cc1d000)
+  ✓ matmul_mpi
+
+[A] SEQUENTIAL CPU
+
+  --- N=512 ---
+============================================================
+  Perkalian Matriks Sekuensial (CPU)
+  Ukuran Matriks : N = 512 x 512
+  Memori         : 1.00 MB per matriks
+============================================================
+
+  Waktu Komputasi : 0.264331 detik
+  GFLOPS          : 1.0155
+
+  C[0][0] = 127.418266  (sanity check)
+============================================================
+  Referensi hasil disimpan ke: ref_result_N512.bin
+============================================================
+
+  --- N=1024 ---
+============================================================
+  Perkalian Matriks Sekuensial (CPU)
+  Ukuran Matriks : N = 1024 x 1024
+  Memori         : 4.00 MB per matriks
+============================================================
+
+  Waktu Komputasi : 6.407567 detik
+  GFLOPS          : 0.3351
+
+  C[0][0] = 260.103149  (sanity check)
+============================================================
+  Referensi hasil disimpan ke: ref_result_N1024.bin
+============================================================
+
+  --- N=2048 ---
+============================================================
+  Perkalian Matriks Sekuensial (CPU)
+  Ukuran Matriks : N = 2048 x 2048
+  Memori         : 16.00 MB per matriks
+============================================================
+
+  Waktu Komputasi : 45.389914 detik
+  GFLOPS          : 0.3785
+
+  C[0][0] = 492.578827  (sanity check)
+============================================================
+  Referensi hasil disimpan ke: ref_result_N2048.bin
+============================================================
+
+[B] CUDA TANPA SHARED MEMORY
+
+  --- N=512  BlockSize=8 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=512  BLOCK_SIZE=8
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (64, 64)  blocks
+  Block : (8, 8)  threads  -> 64 threads/block
+  Total threads : 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000345 detik    │
+  │ Komputasi (kernel):   0.000208 detik    │
+  │ Transfer D→H      :   0.000239 detik    │
+  │ Komunikasi total  :   0.000584 detik    │
+  │ GFLOPS            :  1292.5436          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000208 s  y = 0.000584 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=512  BlockSize=16 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=512  BLOCK_SIZE=16
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (32, 32)  blocks
+  Block : (16, 16)  threads  -> 256 threads/block
+  Total threads : 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000315 detik    │
+  │ Komputasi (kernel):   0.000176 detik    │
+  │ Transfer D→H      :   0.000175 detik    │
+  │ Komunikasi total  :   0.000490 detik    │
+  │ GFLOPS            :  1522.4334          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000176 s  y = 0.000490 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=512  BlockSize=32 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=512  BLOCK_SIZE=32
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (16, 16)  blocks
+  Block : (32, 32)  threads  -> 1024 threads/block
+  Total threads : 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000347 detik    │
+  │ Komputasi (kernel):   0.000174 detik    │
+  │ Transfer D→H      :   0.000249 detik    │
+  │ Komunikasi total  :   0.000596 detik    │
+  │ GFLOPS            :  1541.1737          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000174 s  y = 0.000596 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  BlockSize=8 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=1024  BLOCK_SIZE=8
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (128, 128)  blocks
+  Block : (8, 8)  threads  -> 64 threads/block
+  Total threads : 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000936 detik    │
+  │ Komputasi (kernel):   0.001465 detik    │
+  │ Transfer D→H      :   0.000473 detik    │
+  │ Komunikasi total  :   0.001409 detik    │
+  │ GFLOPS            :  1466.3155          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001465 s  y = 0.001409 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  BlockSize=16 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=1024  BLOCK_SIZE=16
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (64, 64)  blocks
+  Block : (16, 16)  threads  -> 256 threads/block
+  Total threads : 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000932 detik    │
+  │ Komputasi (kernel):   0.001190 detik    │
+  │ Transfer D→H      :   0.000488 detik    │
+  │ Komunikasi total  :   0.001419 detik    │
+  │ GFLOPS            :  1805.3606          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001190 s  y = 0.001419 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  BlockSize=32 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=1024  BLOCK_SIZE=32
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (32, 32)  blocks
+  Block : (32, 32)  threads  -> 1024 threads/block
+  Total threads : 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000970 detik    │
+  │ Komputasi (kernel):   0.001244 detik    │
+  │ Transfer D→H      :   0.000490 detik    │
+  │ Komunikasi total  :   0.001460 detik    │
+  │ GFLOPS            :  1726.8504          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001244 s  y = 0.001460 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  BlockSize=8 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=2048  BLOCK_SIZE=8
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (256, 256)  blocks
+  Block : (8, 8)  threads  -> 64 threads/block
+  Total threads : 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003221 detik    │
+  │ Komputasi (kernel):   0.011526 detik    │
+  │ Transfer D→H      :   0.001734 detik    │
+  │ Komunikasi total  :   0.004955 detik    │
+  │ GFLOPS            :  1490.5587          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.011526 s  y = 0.004955 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  BlockSize=16 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=2048  BLOCK_SIZE=16
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (128, 128)  blocks
+  Block : (16, 16)  threads  -> 256 threads/block
+  Total threads : 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003286 detik    │
+  │ Komputasi (kernel):   0.009254 detik    │
+  │ Transfer D→H      :   0.001765 detik    │
+  │ Komunikasi total  :   0.005050 detik    │
+  │ GFLOPS            :  1856.4965          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.009254 s  y = 0.005050 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  BlockSize=32 ---
+============================================================
+  CUDA Matriks — TANPA Shared Memory
+  N=2048  BLOCK_SIZE=32
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+  VRAM: 9872 MB
+
+  Grid  : (64, 64)  blocks
+  Block : (32, 32)  threads  -> 1024 threads/block
+  Total threads : 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU                  │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003255 detik    │
+  │ Komputasi (kernel):   0.009523 detik    │
+  │ Transfer D→H      :   0.001755 detik    │
+  │ Komunikasi total  :   0.005010 detik    │
+  │ GFLOPS            :  1804.0563          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.009523 s  y = 0.005010 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+[C] CUDA DENGAN SHARED MEMORY (TILED)
+
+  --- N=512  TileSize=8 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=512  TILE_SIZE=8
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 0 KB (tile A + tile B)
+
+  Grid  : (64, 64) blocks
+  Block : (8, 8) threads  -> 64 threads/block
+  Total threads: 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000333 detik    │
+  │ Komputasi (kernel):   0.000172 detik    │
+  │ Transfer D→H      :   0.000171 detik    │
+  │ Komunikasi total  :   0.000504 detik    │
+  │ GFLOPS            :  1563.5802          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000172 s  y = 0.000504 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=512  TileSize=16 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=512  TILE_SIZE=16
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 2 KB (tile A + tile B)
+
+  Grid  : (32, 32) blocks
+  Block : (16, 16) threads  -> 256 threads/block
+  Total threads: 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000331 detik    │
+  │ Komputasi (kernel):   0.000150 detik    │
+  │ Transfer D→H      :   0.000174 detik    │
+  │ Komunikasi total  :   0.000505 detik    │
+  │ GFLOPS            :  1787.0916          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000150 s  y = 0.000505 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=512  TileSize=32 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=512  TILE_SIZE=32
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 8 KB (tile A + tile B)
+
+  Grid  : (16, 16) blocks
+  Block : (32, 32) threads  -> 1024 threads/block
+  Total threads: 262144
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000349 detik    │
+  │ Komputasi (kernel):   0.000143 detik    │
+  │ Transfer D→H      :   0.000210 detik    │
+  │ Komunikasi total  :   0.000559 detik    │
+  │ GFLOPS            :  1881.6976          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000143 s  y = 0.000559 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  TileSize=8 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=1024  TILE_SIZE=8
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 0 KB (tile A + tile B)
+
+  Grid  : (128, 128) blocks
+  Block : (8, 8) threads  -> 64 threads/block
+  Total threads: 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001061 detik    │
+  │ Komputasi (kernel):   0.001198 detik    │
+  │ Transfer D→H      :   0.000515 detik    │
+  │ Komunikasi total  :   0.001576 detik    │
+  │ GFLOPS            :  1792.2462          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001198 s  y = 0.001576 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  TileSize=16 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=1024  TILE_SIZE=16
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 2 KB (tile A + tile B)
+
+  Grid  : (64, 64) blocks
+  Block : (16, 16) threads  -> 256 threads/block
+  Total threads: 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001022 detik    │
+  │ Komputasi (kernel):   0.000996 detik    │
+  │ Transfer D→H      :   0.000529 detik    │
+  │ Komunikasi total  :   0.001551 detik    │
+  │ GFLOPS            :  2157.1477          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000996 s  y = 0.001551 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024  TileSize=32 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=1024  TILE_SIZE=32
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 8 KB (tile A + tile B)
+
+  Grid  : (32, 32) blocks
+  Block : (32, 32) threads  -> 1024 threads/block
+  Total threads: 1048576
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000937 detik    │
+  │ Komputasi (kernel):   0.000996 detik    │
+  │ Transfer D→H      :   0.000493 detik    │
+  │ Komunikasi total  :   0.001429 detik    │
+  │ GFLOPS            :  2156.6624          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.000996 s  y = 0.001429 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  TileSize=8 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=2048  TILE_SIZE=8
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 0 KB (tile A + tile B)
+
+  Grid  : (256, 256) blocks
+  Block : (8, 8) threads  -> 64 threads/block
+  Total threads: 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003579 detik    │
+  │ Komputasi (kernel):   0.009402 detik    │
+  │ Transfer D→H      :   0.001824 detik    │
+  │ Komunikasi total  :   0.005403 detik    │
+  │ GFLOPS            :  1827.3408          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.009402 s  y = 0.005403 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  TileSize=16 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=2048  TILE_SIZE=16
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 2 KB (tile A + tile B)
+
+  Grid  : (128, 128) blocks
+  Block : (16, 16) threads  -> 256 threads/block
+  Total threads: 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003507 detik    │
+  │ Komputasi (kernel):   0.007635 detik    │
+  │ Transfer D→H      :   0.002676 detik    │
+  │ Komunikasi total  :   0.006183 detik    │
+  │ GFLOPS            :  2250.0500          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.007635 s  y = 0.006183 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048  TileSize=32 ---
+============================================================
+  CUDA Matriks — DENGAN Shared Memory (Tiled)
+  N=2048  TILE_SIZE=32
+============================================================
+  GPU          : NVIDIA GeForce RTX 3080  (SM 8.6)
+  Shared Mem   : 48 KB per block
+  Shared dipakai: 8 KB (tile A + tile B)
+
+  Grid  : (64, 64) blocks
+  Block : (32, 32) threads  -> 1024 threads/block
+  Total threads: 4194304
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (SHARED MEM)     │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003216 detik    │
+  │ Komputasi (kernel):   0.008013 detik    │
+  │ Transfer D→H      :   0.001737 detik    │
+  │ Komunikasi total  :   0.004953 detik    │
+  │ GFLOPS            :  2143.9760          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.008013 s  y = 0.004953 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+[D] cuBLAS
+
+  --- N=512 ---
+============================================================
+  cuBLAS — Perkalian Matriks Optimal
+  N = 512 x 512
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (cuBLAS)         │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.000348 detik    │
+  │ Komputasi cuBLAS  :   0.005083 detik    │
+  │ Transfer D→H      :   0.000212 detik    │
+  │ Komunikasi total  :   0.000560 detik    │
+  │ GFLOPS            :    52.8120          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.005083 s  y = 0.000560 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=1024 ---
+============================================================
+  cuBLAS — Perkalian Matriks Optimal
+  N = 1024 x 1024
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (cuBLAS)         │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.001027 detik    │
+  │ Komputasi cuBLAS  :   0.001069 detik    │
+  │ Transfer D→H      :   0.000531 detik    │
+  │ Komunikasi total  :   0.001558 detik    │
+  │ GFLOPS            :  2009.6083          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.001069 s  y = 0.001558 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+  --- N=2048 ---
+============================================================
+  cuBLAS — Perkalian Matriks Optimal
+  N = 2048 x 2048
+============================================================
+  GPU : NVIDIA GeForce RTX 3080  (SM 8.6)
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (cuBLAS)         │
+  ├─────────────────────────────────────────┤
+  │ Transfer H→D      :   0.003465 detik    │
+  │ Komputasi cuBLAS  :   0.007687 detik    │
+  │ Transfer D→H      :   0.001914 detik    │
+  │ Komunikasi total  :   0.005379 detik    │
+  │ GFLOPS            :  2234.8018          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.007687 s  y = 0.005379 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓ — Hasil identik dengan CPU
+============================================================
+
+[E] MPI MULTICORE
+
+  --- N=512  NP=8 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=8  N=512
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP= 8)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   0.046890 detik    │
+  │ Komunikasi (max)  :   0.011197 detik    │
+  │   - Scatter+Bcast :   0.006019 detik    │
+  │   - Gather        :   0.004965 detik    │
+  │ GFLOPS            :     5.7249          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.046890 s  y = 0.011197 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=512  NP=16 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=16  N=512
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP=16)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   0.026736 detik    │
+  │ Komunikasi (max)  :   0.009361 detik    │
+  │   - Scatter+Bcast :   0.003530 detik    │
+  │   - Gather        :   0.005831 detik    │
+  │ GFLOPS            :    10.0401          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.026736 s  y = 0.009361 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=1024  NP=8 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=8  N=1024
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP= 8)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   0.898008 detik    │
+  │ Komunikasi (max)  :   0.154748 detik    │
+  │   - Scatter+Bcast :   0.010115 detik    │
+  │   - Gather        :   0.046679 detik    │
+  │ GFLOPS            :     2.3914          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.898008 s  y = 0.154748 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=1024  NP=16 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=16  N=1024
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP=16)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   0.456562 detik    │
+  │ Komunikasi (max)  :   0.102801 detik    │
+  │   - Scatter+Bcast :   0.010256 detik    │
+  │   - Gather        :   0.043070 detik    │
+  │ GFLOPS            :     4.7036          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 0.456562 s  y = 0.102801 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=2048  NP=8 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=8  N=2048
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP= 8)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :  10.540605 detik    │
+  │ Komunikasi (max)  :   4.486665 detik    │
+  │   - Scatter+Bcast :   0.046874 detik    │
+  │   - Gather        :   4.439791 detik    │
+  │ GFLOPS            :     1.6299          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 10.540605 s  y = 4.486665 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+  --- N=2048  NP=16 ---
+============================================================
+  MPI Perkalian Matriks  |  NP=16  N=2048
+============================================================
+
+  ┌─────────────────────────────────────────┐
+  │ HASIL PENGUKURAN WAKTU (MPI, NP=16)     │
+  ├─────────────────────────────────────────┤
+  │ Komputasi (max)   :   5.434428 detik    │
+  │ Komunikasi (max)  :   1.997980 detik    │
+  │   - Scatter+Bcast :   0.039939 detik    │
+  │   - Gather        :   0.805336 detik    │
+  │ GFLOPS            :     3.1613          │
+  ├─────────────────────────────────────────┤
+  │ FORMAT TABEL (x/y):                     │
+  │   x = 5.434428 s  y = 1.997980 s       │
+  └─────────────────────────────────────────┘
+
+  [VERIFIKASI] PASS ✓
+============================================================
+
+==================================================
+  SELESAI. Hasil disimpan di: experiment_results.log
+==================================================

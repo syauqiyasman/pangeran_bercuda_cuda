@@ -1,0 +1,66 @@
+{
+  "environment": {
+    "python": "3.8.10 (default, Mar 18 2025, 20:04:55)  [GCC 9.4.0]",
+    "platform": "Linux-5.4.0-150-generic-x86_64-with-glibc2.29",
+    "torch_version": "2.4.1+cu121",
+    "torch_cuda_version": "12.1",
+    "cudnn_version": 90100,
+    "cuda_available": true,
+    "nvidia_smi": "Fri May 29 05:39:49 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 580.95.05              Driver Version: 580.95.05      CUDA Version: 13.0     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 3080        On  |   00000000:21:00.0 Off |                  N/A |\n|  0%   33C    P8              8W /  320W |     103MiB /  10240MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+",
+    "gpu_name": "NVIDIA GeForce RTX 3080",
+    "gpu_count": 1,
+    "compute_capability": "8.6",
+    "total_memory_mb": 9872.38,
+    "multi_processor_count": 68
+  },
+  "experiment_config": {
+    "samples": 200000,
+    "features": 128,
+    "classes": 4,
+    "hidden1": 256,
+    "hidden2": 128,
+    "epochs": 8,
+    "batch_size": 2048,
+    "lr": 0.001,
+    "seed": 42,
+    "output_json": "topik4_results.json"
+  },
+  "results": [
+    {
+      "name": "CPU FP32",
+      "device": "cpu",
+      "precision": "fp32",
+      "epochs": 8,
+      "train_seconds": 2.5801032772287726,
+      "avg_epoch_seconds": 0.3194046533899382,
+      "test_accuracy": 0.970175,
+      "final_loss": 0.0253465433627367,
+      "max_gpu_memory_mb": null,
+      "notes": "Berhasil"
+    },
+    {
+      "name": "GPU CUDA FP32",
+      "device": "cuda",
+      "precision": "fp32",
+      "epochs": 8,
+      "train_seconds": 0.895266124047339,
+      "avg_epoch_seconds": 0.10948215483222157,
+      "test_accuracy": 0.97005,
+      "final_loss": 0.025263840448856354,
+      "max_gpu_memory_mb": 25.18798828125,
+      "notes": "Berhasil"
+    },
+    {
+      "name": "GPU CUDA AMP",
+      "device": "cuda",
+      "precision": "amp",
+      "epochs": 8,
+      "train_seconds": 1.0728131728246808,
+      "avg_epoch_seconds": 0.1318051786511205,
+      "test_accuracy": 0.97045,
+      "final_loss": 0.025381620889902114,
+      "max_gpu_memory_mb": 23.73681640625,
+      "notes": "Berhasil dengan Automatic Mixed Precision; pada RTX 3080 ini dapat memakai Tensor Cores."
+    }
+  ]
+}

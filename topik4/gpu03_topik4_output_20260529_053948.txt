@@ -1,0 +1,98 @@
+==============================================================================
+SURVEY SINGKAT: ALGORITMA/FRAMEWORK AI-ML YANG BISA BERPROSES DI GPU NVIDIA
+==============================================================================
+Framework/Tool           | Contoh algoritma                                 | Backend
+--------------------------------------------------------------------------------------------------------------
+PyTorch                  | Deep learning: MLP, CNN, RNN, Transformer        | CUDA, cuDNN, cuBLAS, AMP
+TensorFlow/Keras         | Deep learning training dan inference             | CUDA, cuDNN, XLA
+TensorRT                 | Optimasi inference model terlatih                | FP32/FP16/INT8, engine optimized
+RAPIDS cuML              | ML klasik: Random Forest, KMeans, PCA, UMAP, SVM tertentu | CUDA-X Data Science
+CuPy                     | Array/Numpy-like computation di GPU              | CUDA kernels, cuBLAS, cuFFT
+Numba CUDA               | Custom kernel Python untuk GPU                   | CUDA programming dari Python
+scikit-learn-intelex/cuML accel | Akselerasi pipeline ML tertentu                  | Backend GPU/accelerated libraries
+
+==============================================================================
+INFORMASI ENVIRONMENT
+==============================================================================
+python                  : 3.8.10 (default, Mar 18 2025, 20:04:55)  [GCC 9.4.0]
+platform                : Linux-5.4.0-150-generic-x86_64-with-glibc2.29
+torch_version           : 2.4.1+cu121
+torch_cuda_version      : 12.1
+cudnn_version           : 90100
+cuda_available          : True
+gpu_name                : NVIDIA GeForce RTX 3080
+gpu_count               : 1
+compute_capability      : 8.6
+total_memory_mb         : 9872.38
+multi_processor_count   : 68
+
+==============================================================================
+MEMBUAT DATASET SINTETIS
+==============================================================================
+Dataset dibuat offline menggunakan torch.randn, sehingga eksperimen bisa diulang tanpa internet.
+Label dibuat dari fungsi linear + non-linear, sehingga model MLP punya masalah klasifikasi yang realistis untuk diuji.
+Train: 160,000 sampel | Test: 40,000 sampel
+
+==============================================================================
+EKSPERIMEN 1: CPU FP32
+==============================================================================
+  Epoch 01/8 | loss=0.525387 | waktu_epoch=0.352 detik
+  Epoch 02/8 | loss=0.105598 | waktu_epoch=0.323 detik
+  Epoch 03/8 | loss=0.070650 | waktu_epoch=0.309 detik
+  Epoch 04/8 | loss=0.053265 | waktu_epoch=0.321 detik
+  Epoch 05/8 | loss=0.043826 | waktu_epoch=0.318 detik
+  Epoch 06/8 | loss=0.034630 | waktu_epoch=0.302 detik
+  Epoch 07/8 | loss=0.028187 | waktu_epoch=0.313 detik
+  Epoch 08/8 | loss=0.025347 | waktu_epoch=0.317 detik
+
+==============================================================================
+EKSPERIMEN 2: GPU CUDA FP32
+==============================================================================
+  Epoch 01/8 | loss=0.525387 | waktu_epoch=0.213 detik
+  Epoch 02/8 | loss=0.105598 | waktu_epoch=0.099 detik
+  Epoch 03/8 | loss=0.070645 | waktu_epoch=0.097 detik
+  Epoch 04/8 | loss=0.053262 | waktu_epoch=0.098 detik
+  Epoch 05/8 | loss=0.043835 | waktu_epoch=0.092 detik
+  Epoch 06/8 | loss=0.034667 | waktu_epoch=0.095 detik
+  Epoch 07/8 | loss=0.028191 | waktu_epoch=0.091 detik
+  Epoch 08/8 | loss=0.025264 | waktu_epoch=0.090 detik
+
+==============================================================================
+EKSPERIMEN 3: GPU CUDA AMP / MIXED PRECISION
+==============================================================================
+  Epoch 01/8 | loss=0.525300 | waktu_epoch=0.180 detik
+  Epoch 02/8 | loss=0.105574 | waktu_epoch=0.124 detik
+  Epoch 03/8 | loss=0.070647 | waktu_epoch=0.122 detik
+  Epoch 04/8 | loss=0.053234 | waktu_epoch=0.129 detik
+  Epoch 05/8 | loss=0.043746 | waktu_epoch=0.128 detik
+  Epoch 06/8 | loss=0.034623 | waktu_epoch=0.126 detik
+  Epoch 07/8 | loss=0.028122 | waktu_epoch=0.120 detik
+  Epoch 08/8 | loss=0.025382 | waktu_epoch=0.124 detik
+
+==============================================================================
+RINGKASAN HASIL EKSPERIMEN
+==============================================================================
+Masalah             : Klasifikasi tabular sintetis multi-kelas
+Model               : MLP (128 -> 256 -> 128 -> 4)
+Jumlah data         : 200,000 sampel, 128 fitur, 4 kelas
+Epoch               : 8
+Batch size          : 2048
+
+Setting              | Precision  |   Train(s) | Epoch avg(s) |   Akurasi | GPU Mem(MB)
+--------------------------------------------------------------------------------------
+CPU FP32             | fp32       |      2.580 |        0.319 |    0.9702 |           -
+GPU CUDA FP32        | fp32       |      0.895 |        0.109 |    0.9700 |        25.2
+GPU CUDA AMP         | amp        |      1.073 |        0.132 |    0.9705 |        23.7
+
+Perbandingan speedup terhadap CPU:
+  - GPU CUDA FP32: 2.88x lebih cepat dari CPU berdasarkan waktu training total
+  - GPU CUDA AMP: 2.40x lebih cepat dari CPU berdasarkan waktu training total
+
+Kesimpulan otomatis:
+  - Setting tercepat pada eksperimen ini adalah GPU CUDA FP32 (fp32) dengan waktu training 0.895 detik.
+  - GPU cocok untuk workload AI/ML yang banyak melakukan operasi matriks dan tensor secara paralel.
+  - Mixed precision/AMP biasanya semakin menguntungkan pada GPU RTX karena dapat memakai Tensor Cores, tetapi hasil aktual tetap bergantung ukuran model, batch size, dan versi library.
+  - Akurasi CPU dan GPU tidak harus identik 100% karena urutan operasi floating-point berbeda, tetapi harus berada pada kisaran yang sebanding.
+
+File JSON hasil eksperimen disimpan ke: topik4_results.json
+Simpan seluruh output terminal ini sebagai context untuk penulisan laporan.

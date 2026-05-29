@@ -1,0 +1,431 @@
+==================================================
+  EKSPERIMEN TOPIK 3: JACOBI ITERATION
+  Sun May 24 09:56:14 UTC 2026
+==================================================
+
+[ENVIRONMENT]
+  Hostname: user04-gpu-02-cuda
+  CPU(s): 64
+  GPU: NVIDIA GeForce GTX 1080 Ti, 11264 MiB
+
+[SETUP CUDA LIBRARY PATH]
+
+[COMPILE]
+  ✓ jacobi_sequential
+  ✓ jacobi_mpi
+  ✓ jacobi_cuda
+
+[A] SEQUENTIAL CPU
+
+  --- N=512 ---
+============================================================
+  Topik 3A - Jacobi Iteration (Sequential CPU)
+  N=512  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.947956e-07
+  Execution time (x)  : 0.004227 s
+  Communication time (y): 0.000000 s
+  ||x - x_ref||_inf   : 5.891295e-08
+  ||Ax - b||_inf      : 8.164172e-05
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.004227 / 0.000000)
+SUMMARY mode=seq label=SEQ N=512 x=0.004227 y=0.000000 iter=12 residual=8.164172e-05 error=5.891295e-08
+============================================================
+
+  --- N=1024 ---
+============================================================
+  Topik 3A - Jacobi Iteration (Sequential CPU)
+  N=1024  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.964052e-07
+  Execution time (x)  : 0.013499 s
+  Communication time (y): 0.000000 s
+  ||x - x_ref||_inf   : 5.925789e-08
+  ||Ax - b||_inf      : 1.605629e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.013499 / 0.000000)
+SUMMARY mode=seq label=SEQ N=1024 x=0.013499 y=0.000000 iter=12 residual=1.605629e-04 error=5.925789e-08
+============================================================
+
+  --- N=2048 ---
+============================================================
+  Topik 3A - Jacobi Iteration (Sequential CPU)
+  N=2048  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.972129e-07
+  Execution time (x)  : 0.063132 s
+  Communication time (y): 0.000000 s
+  ||x - x_ref||_inf   : 5.943096e-08
+  ||Ax - b||_inf      : 3.203801e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.063132 / 0.000000)
+SUMMARY mode=seq label=SEQ N=2048 x=0.063132 y=0.000000 iter=12 residual=3.203801e-04 error=5.943096e-08
+============================================================
+
+[B] MPI MULTICORE
+
+  --- N=512  NP=4 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=4  N=512  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.947956e-07
+  Execution time (x)  : 0.000309 s
+  Communication time (y): 0.001172 s
+  ||x - x_ref||_inf   : 5.891295e-08
+  ||Ax - b||_inf      : 8.164172e-05
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.000309 / 0.001172)
+SUMMARY mode=mpi label=NP=4 N=512 x=0.000309 y=0.001172 iter=12 residual=8.164172e-05 error=5.891295e-08
+============================================================
+
+  --- N=512  NP=8 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=8  N=512  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.947956e-07
+  Execution time (x)  : 0.000147 s
+  Communication time (y): 0.001419 s
+  ||x - x_ref||_inf   : 5.891295e-08
+  ||Ax - b||_inf      : 8.164172e-05
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.000147 / 0.001419)
+SUMMARY mode=mpi label=NP=8 N=512 x=0.000147 y=0.001419 iter=12 residual=8.164172e-05 error=5.891295e-08
+============================================================
+
+  --- N=512  NP=16 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=16  N=512  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.947956e-07
+  Execution time (x)  : 0.000125 s
+  Communication time (y): 0.001760 s
+  ||x - x_ref||_inf   : 5.891295e-08
+  ||Ax - b||_inf      : 8.164172e-05
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.000125 / 0.001760)
+SUMMARY mode=mpi label=NP=16 N=512 x=0.000125 y=0.001760 iter=12 residual=8.164172e-05 error=5.891295e-08
+============================================================
+
+  --- N=1024  NP=4 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=4  N=1024  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.964052e-07
+  Execution time (x)  : 0.000684 s
+  Communication time (y): 0.002573 s
+  ||x - x_ref||_inf   : 5.925789e-08
+  ||Ax - b||_inf      : 1.605629e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.000684 / 0.002573)
+SUMMARY mode=mpi label=NP=4 N=1024 x=0.000684 y=0.002573 iter=12 residual=1.605629e-04 error=5.925789e-08
+============================================================
+
+  --- N=1024  NP=8 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=8  N=1024  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.964052e-07
+  Execution time (x)  : 0.001028 s
+  Communication time (y): 0.004211 s
+  ||x - x_ref||_inf   : 5.925789e-08
+  ||Ax - b||_inf      : 1.605629e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.001028 / 0.004211)
+SUMMARY mode=mpi label=NP=8 N=1024 x=0.001028 y=0.004211 iter=12 residual=1.605629e-04 error=5.925789e-08
+============================================================
+
+  --- N=1024  NP=16 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=16  N=1024  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.964052e-07
+  Execution time (x)  : 0.000502 s
+  Communication time (y): 0.004556 s
+  ||x - x_ref||_inf   : 5.925789e-08
+  ||Ax - b||_inf      : 1.605629e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.000502 / 0.004556)
+SUMMARY mode=mpi label=NP=16 N=1024 x=0.000502 y=0.004556 iter=12 residual=1.605629e-04 error=5.925789e-08
+============================================================
+
+  --- N=2048  NP=4 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=4  N=2048  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.972129e-07
+  Execution time (x)  : 0.010281 s
+  Communication time (y): 0.017360 s
+  ||x - x_ref||_inf   : 5.943096e-08
+  ||Ax - b||_inf      : 3.203801e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.010281 / 0.017360)
+SUMMARY mode=mpi label=NP=4 N=2048 x=0.010281 y=0.017360 iter=12 residual=3.203801e-04 error=5.943096e-08
+============================================================
+
+  --- N=2048  NP=8 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=8  N=2048  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.972129e-07
+  Execution time (x)  : 0.006494 s
+  Communication time (y): 0.015025 s
+  ||x - x_ref||_inf   : 5.943096e-08
+  ||Ax - b||_inf      : 3.203801e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.006494 / 0.015025)
+SUMMARY mode=mpi label=NP=8 N=2048 x=0.006494 y=0.015025 iter=12 residual=3.203801e-04 error=5.943096e-08
+============================================================
+
+  --- N=2048  NP=16 ---
+============================================================
+  Topik 3A - Jacobi Iteration (MPI)
+  NP=16  N=2048  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.972129e-07
+  Execution time (x)  : 0.001999 s
+  Communication time (y): 0.011895 s
+  ||x - x_ref||_inf   : 5.943096e-08
+  ||Ax - b||_inf      : 3.203801e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.001999 / 0.011895)
+SUMMARY mode=mpi label=NP=16 N=2048 x=0.001999 y=0.011895 iter=12 residual=3.203801e-04 error=5.943096e-08
+============================================================
+
+[C] CUDA
+
+  --- N=512  BlockSize=128 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=512  BLOCK_SIZE=128  GRID_SIZE=4
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 4 blocks
+  Block               : 128 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.947956e-07
+  Execution time (x)  : 0.007117 s
+  Communication time (y): 0.000838 s
+  ||x - x_ref||_inf   : 5.891295e-08
+  ||Ax - b||_inf      : 8.164172e-05
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.007117 / 0.000838)
+SUMMARY mode=cuda label=grid=4_block=128 N=512 x=0.007117 y=0.000838 iter=12 residual=8.164172e-05 error=5.891295e-08
+============================================================
+
+  --- N=512  BlockSize=256 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=512  BLOCK_SIZE=256  GRID_SIZE=2
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 2 blocks
+  Block               : 256 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.947956e-07
+  Execution time (x)  : 0.007524 s
+  Communication time (y): 0.000764 s
+  ||x - x_ref||_inf   : 5.891295e-08
+  ||Ax - b||_inf      : 8.164172e-05
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.007524 / 0.000764)
+SUMMARY mode=cuda label=grid=2_block=256 N=512 x=0.007524 y=0.000764 iter=12 residual=8.164172e-05 error=5.891295e-08
+============================================================
+
+  --- N=512  BlockSize=512 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=512  BLOCK_SIZE=512  GRID_SIZE=1
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 1 blocks
+  Block               : 512 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.947956e-07
+  Execution time (x)  : 0.008805 s
+  Communication time (y): 0.000830 s
+  ||x - x_ref||_inf   : 5.891295e-08
+  ||Ax - b||_inf      : 8.164172e-05
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.008805 / 0.000830)
+SUMMARY mode=cuda label=grid=1_block=512 N=512 x=0.008805 y=0.000830 iter=12 residual=8.164172e-05 error=5.891295e-08
+============================================================
+
+  --- N=1024  BlockSize=128 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=1024  BLOCK_SIZE=128  GRID_SIZE=8
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 8 blocks
+  Block               : 128 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.964052e-07
+  Execution time (x)  : 0.008228 s
+  Communication time (y): 0.001574 s
+  ||x - x_ref||_inf   : 5.925789e-08
+  ||Ax - b||_inf      : 1.605629e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.008228 / 0.001574)
+SUMMARY mode=cuda label=grid=8_block=128 N=1024 x=0.008228 y=0.001574 iter=12 residual=1.605629e-04 error=5.925789e-08
+============================================================
+
+  --- N=1024  BlockSize=256 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=1024  BLOCK_SIZE=256  GRID_SIZE=4
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 4 blocks
+  Block               : 256 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.964052e-07
+  Execution time (x)  : 0.009079 s
+  Communication time (y): 0.001664 s
+  ||x - x_ref||_inf   : 5.925789e-08
+  ||Ax - b||_inf      : 1.605629e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.009079 / 0.001664)
+SUMMARY mode=cuda label=grid=4_block=256 N=1024 x=0.009079 y=0.001664 iter=12 residual=1.605629e-04 error=5.925789e-08
+============================================================
+
+  --- N=1024  BlockSize=512 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=1024  BLOCK_SIZE=512  GRID_SIZE=2
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 2 blocks
+  Block               : 512 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.964052e-07
+  Execution time (x)  : 0.011411 s
+  Communication time (y): 0.001683 s
+  ||x - x_ref||_inf   : 5.925789e-08
+  ||Ax - b||_inf      : 1.605629e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.011411 / 0.001683)
+SUMMARY mode=cuda label=grid=2_block=512 N=1024 x=0.011411 y=0.001683 iter=12 residual=1.605629e-04 error=5.925789e-08
+============================================================
+
+  --- N=2048  BlockSize=128 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=2048  BLOCK_SIZE=128  GRID_SIZE=16
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 16 blocks
+  Block               : 128 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.972129e-07
+  Execution time (x)  : 0.010642 s
+  Communication time (y): 0.004403 s
+  ||x - x_ref||_inf   : 5.943096e-08
+  ||Ax - b||_inf      : 3.203801e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.010642 / 0.004403)
+SUMMARY mode=cuda label=grid=16_block=128 N=2048 x=0.010642 y=0.004403 iter=12 residual=3.203801e-04 error=5.943096e-08
+============================================================
+
+  --- N=2048  BlockSize=256 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=2048  BLOCK_SIZE=256  GRID_SIZE=8
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 8 blocks
+  Block               : 256 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.972129e-07
+  Execution time (x)  : 0.012455 s
+  Communication time (y): 0.004516 s
+  ||x - x_ref||_inf   : 5.943096e-08
+  ||Ax - b||_inf      : 3.203801e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.012455 / 0.004516)
+SUMMARY mode=cuda label=grid=8_block=256 N=2048 x=0.012455 y=0.004516 iter=12 residual=3.203801e-04 error=5.943096e-08
+============================================================
+
+  --- N=2048  BlockSize=512 ---
+============================================================
+  Topik 3A - Jacobi Iteration (CUDA)
+  GPU=NVIDIA GeForce GTX 1080 Ti  N=2048  BLOCK_SIZE=512  GRID_SIZE=4
+  TOL=1.0e-06  MAX_ITER=5000  SEED=42
+============================================================
+  Grid                : 4 blocks
+  Block               : 512 threads
+  Status              : CONVERGED
+  Iterations          : 12
+  Final max diff      : 2.972129e-07
+  Execution time (x)  : 0.016771 s
+  Communication time (y): 0.004335 s
+  ||x - x_ref||_inf   : 5.943096e-08
+  ||Ax - b||_inf      : 3.203801e-04
+  x[0]                : 1.000000
+  x[N-1]              : 1.000000
+  FORMAT TABEL (x/y)  : (0.016771 / 0.004335)
+SUMMARY mode=cuda label=grid=4_block=512 N=2048 x=0.016771 y=0.004335 iter=12 residual=3.203801e-04 error=5.943096e-08
+============================================================
+
+==================================================
+  SELESAI. Hasil disimpan di: /var/nfs/pangeran_bercuda_cuda/topik3/experiment_results.log
+==================================================
